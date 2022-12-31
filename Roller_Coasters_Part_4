@@ -1,0 +1,90 @@
+import helper
+
+def getLongestCoaster(coastersList):
+    longestCoasterDict = {}
+    lengthList = []
+    longest = 0
+
+    for dict in coastersList:
+        if dict["length"] not in lengthList:
+            lengthList.append(dict["length"])                       #get the longest coaster, loop through all the coasters to get the longest
+            for empty in lengthList:
+                if empty == "":
+                    lengthList.remove(empty)
+                    for strings in lengthList:
+                        strings = int(strings)
+                        if strings > longest:
+                            longest = strings
+    longestCoaster = str(longest)
+
+    for numbers in lengthList:
+        numbers = int(numbers)
+
+    for coaster in coastersList:
+        if coaster["length"] == str(longest):                   #loop through and assign the longest coaster to a variable
+            longestCoasterDict = coaster
+
+
+    print(longestCoasterDict['name'], ' [', longestCoasterDict['park'], ']', sep='')
+    for keys in longestCoasterDict:
+        if keys == 'speed':
+            if keys.isdigit():
+                print('\t', keys, ' = ', longestCoasterDict['speed'], 'mph')                    #print out the keys for the longest coaster
+        if keys == 'height':
+            if keys.isdigit():
+                print('\t', keys, ' = ', longestCoasterDict['height'], 'ft')
+        if keys == 'length':
+            if keys.isalpha():
+                print('\t', keys, ' = ', longestCoasterDict['length'], 'ft')
+        if keys == 'status':
+            print('\t', 'Status is', longestCoasterDict['status'], '\n')
+
+    return longestCoasterDict
+
+
+def getParkMostCoasters(coastersList):
+    listOfRepeatParks = []
+
+    for coasters in coastersList:                                   #get park with the most coasters
+        for keys in coasters:
+            if keys == "park":                                      #creates a list of parks and its coasters
+                value = coasters[keys]
+                listOfRepeatParks.append(value)
+
+    return listOfRepeatParks
+
+
+def most_frequent_count(List):
+    counter = 0
+    num = List[0]
+
+    for i in List:
+        curr_frequency = List.count(i)
+        if (curr_frequency > counter):                                      #find the park in the list with the most items in it.
+            counter = curr_frequency
+            num = i
+
+    return num
+
+def displayParkMostCoasters(coastersList, thePark, coasterCount):
+
+    for dicts in coastersList:
+        if dicts["park"] == thePark:
+            print(dicts['name'], ' [', dicts['park'], ']', sep='')
+            for key in dicts:
+                value = dicts[key]
+                if value != '':
+                    if key == 'speed':
+                        print('\t', key, ' = ', value, 'mph')                   #once the park is found with the most items, print out the requested keys in the coasters in the park
+                    if key == 'height':
+                        print('\t', key, ' = ', value, 'ft')
+                    if key == 'length':
+                        print('\t', key, ' = ', value, 'ft')
+                    if key == 'status':
+                        print('\t', 'Status is', value)
+
+    counter = 0
+    for dicts in coastersList:
+        if dicts["park"] == thePark:
+            counter += 1
+    print(thePark, "has", counter, "coasters\n")                                            #print the statement for the park's coasters count
