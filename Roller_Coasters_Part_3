@@ -1,0 +1,43 @@
+import user_interface                                   #import projects
+import helper
+import extra_credit
+
+def getMenuDict():
+    menuDict = {"A": "Number of coasters", "B": 'Number of operating coasters', "C": 'Fastest coaster',
+                "D": 'Amusement parks', 'E': 'Coasters in a park', 'F': 'Find coasters', 'G': 'Longest Coaster', 'H': 'Park with most coasters', 'Q': 'Quit'}
+    for key in menuDict:
+        value = menuDict[key]                                   #menu dict to retrieve the menu
+    return menuDict
+
+def main():
+    coastersList = helper.createCoastersFromFile()
+
+    menuDict = getMenuDict()
+
+    choice = ''                                                         #run the functions using if statements. Program stops if "Q"!!!
+
+    while choice != "Q":
+        user_interface.displayMenu(menuDict)
+        choice = user_interface.getUserChoice(menuDict)
+        if choice == 'A':
+            user_interface.displayNumCoasters(coastersList)
+        elif choice == 'B':
+            user_interface.displayNumOperatingCoasters(coastersList)
+        elif choice == 'C':
+            user_interface.displayFastestCoaster(coastersList)
+        elif choice == 'D':
+            user_interface.displayAllParks(coastersList)
+        elif choice == 'E':
+            user_interface.displayCoastersInPark(coastersList)
+        elif choice == 'F':
+            user_interface.findCoasters(coastersList)
+        elif choice == 'G':
+            extra_credit.getLongestCoaster(coastersList)
+        elif choice == 'H':
+            extra_credit.getParkMostCoasters(coastersList)
+            parkWithMost = extra_credit.getParkMostCoasters(coastersList)
+            thePark = extra_credit.most_frequent_count(parkWithMost)                                #extra credit got a little messy
+            coasterCount = extra_credit.most_frequent_count(parkWithMost)
+            extra_credit.displayParkMostCoasters(coastersList, thePark, coasterCount)
+
+main()
