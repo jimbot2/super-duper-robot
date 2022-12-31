@@ -1,0 +1,56 @@
+def createCoastersFromFile(filenameStr='roller_coasters.csv'):                      #create coaster from file,
+    coastersList = []
+
+    fileIn = open('roller_coasters.csv', 'r', encoding='utf8')
+
+    keysList = fileIn.readline()
+    keysList = keysList.strip().split(',')
+
+    for rows in fileIn:                                                             #organize coaster list, make dictionaries for each coasters, make sure status is formated
+        dict = {}
+        lines = rows.strip().split(',')
+        for i in range(len(keysList)):
+            key = keysList[i]
+            value = lines[i]
+            if key == 'status':
+                value = value[7:]
+            dict[key] = value
+        coastersList.append(dict)
+    fileIn.close()
+
+    return coastersList                                                     # return coaster list for uses
+# need to delete status
+
+
+def getParksList(coastersList):
+    parkList = []                                                               #park lists for caosters. return a list for the coasters
+
+    for dict in coastersList:
+        if dict["park"] not in parkList:
+            parkList.append(dict["park"])
+    parkList.sort()
+
+    return parkList
+
+def getFastestCoaster(coastersList):
+    fastestCoasterDict = {}                                                         # get the fastest coaster, loop through to make sure its fastest
+    speedsList = []
+    fastest = 0
+
+    for dict in coastersList:
+        if dict["speed"] not in speedsList:
+            speedsList.append(dict["speed"])
+            for empty in speedsList:
+                if empty == "":
+                    speedsList.remove(empty)
+                    for strings in speedsList:
+                        strings = int(strings)
+                        if strings > fastest:
+                            fastest = strings
+    fastestCoaster = str(fastest)
+
+    for coaster in coastersList:
+        if coaster["speed"] == str(fastest):                                            #make sure that it goes through the speed key
+            fastestCoasterDict = coaster
+
+    return fastestCoasterDict
