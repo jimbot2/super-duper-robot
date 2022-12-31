@@ -1,0 +1,100 @@
+import helper
+
+
+def displayMenu(menuDict):                                                          # display the menu
+    for key in menuDict:
+        value = menuDict[key]
+        print(key, ' -> ', value, sep='')
+
+    menuKeys = list(menuDict.keys())
+    menuKeys.sort()
+
+
+def getUserChoice(menuDict):                                                # get the users choice
+    userInput = input("Choice: ").strip().title()
+    return userInput
+
+
+def displayNumCoasters(coastersList):                                               # display total num coasters
+    count = 0
+    for dicts in coastersList:
+        count += 1
+    print(count, '\n')
+
+
+def displayNumOperatingCoasters(coastersList):
+    count = 0                                                                       #show number of operating coasters
+    for dicts in coastersList:
+        if dicts["status"] == "operating":
+            count += 1
+    print(count, '\n')
+
+def displayCoaster(coasterDict):
+    print(coasterDict['name'], ' [', coasterDict['park'], ']', sep='')              #display the coasters from the requested list
+    for key in coasterDict:
+        value = coasterDict[key]
+        if value != '':
+            if key == 'speed':
+                print('\t', key, ' = ', value, 'mph')
+            if key == 'height':
+                print('\t', key, ' = ', value, 'ft')                                    # show only the requested keys
+            if key == 'length':
+                print('\t', key, ' = ', value, 'ft')
+            if key == 'status':
+                print('\t', 'Status is', value, '\n')
+
+
+def displayFastestCoaster(coastersList):
+    fastestCoasterDict = helper.getFastestCoaster(coastersList)                         #Show  the displayed fastest coaster
+
+    print(fastestCoasterDict['name'], ' [', fastestCoasterDict['park'], ']', sep='')
+    for keys in fastestCoasterDict:
+        if keys == 'speed':
+            print('\t', keys, ' = ', fastestCoasterDict['speed'], 'mph')                #coaster will contain these keys
+        if keys == 'height':
+            print('\t', keys, ' = ', fastestCoasterDict['height'], 'ft')
+        if keys == 'length':
+            print('\t', keys, ' = ', fastestCoasterDict['length'], 'ft')
+        if keys == 'status':
+            print('\t', 'Status is', fastestCoasterDict['status'],'\n')
+
+
+def displayAllParks(coastersList):
+    allParks = helper.getParksList(coastersList)                                #display all the parks
+
+
+    for parkNames in allParks:
+        print(parkNames)                                                        #loop through to show all parks
+    print('\n')
+
+
+def displayCoastersInPark(coastersList):
+    enterParkName = input("Enter a park name: ").title().strip()                  #display the coasters count in the park
+
+    count = 0
+
+    for dicts in coastersList:                                                      #show the coasters in the park
+        if enterParkName in dicts['park']:
+            count += 1
+            displayCoaster(dicts)
+
+    if count == 0:
+        print('No coasters in', enterParkName, '\n')                                   #show whether there is or not any coasters
+    else:
+        print(enterParkName, 'has', count, 'coasters\n')
+
+
+def findCoasters(coastersList):
+    enterCoasterName = input("Enter a search phrase: ").strip().title()                 #find the coasters from the requested query
+
+    count = 0
+
+    for dicts in coastersList:
+        if enterCoasterName in dicts['name']:
+            count += 1
+            displayCoaster(dicts)
+
+    if count != 0:
+        print('Found', count, 'coasters that contain', enterCoasterName, '\n')
+    else:
+        print('No coasters contain', enterCoasterName, '\n')
